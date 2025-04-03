@@ -13,17 +13,12 @@ RUN sed -i 's@archive.ubuntu.com@mirror.kakao.com@g' /etc/apt/sources.list && \
     apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists/*
 
-# pwninit 
-RUN wget https://github.com/io12/pwninit/archive/refs/tags/3.3.1.tar.gz && \
-    tar -xvf 3.3.1.tar.gz && \
-    cd pwninit-3.3.1 && \
-    cargo install --path . && \
-    cd .. && \
-    rm -rf 3.3.1.tar.gz pwninit-3.3.1
+# cpwn
+RUN git clone https://github.com/bl4ckhyun/cpwn.git
 
 # Python packages
 RUN python3 -m pip install --upgrade pip && \
-    pip3 install unicorn keystone-engine ROPgadget capstone angr &&\
+    pip3 install unicorn keystone-engine capstone angr &&\
     python3 -m pip install --upgrade pwntools
 
 # gem packages
@@ -65,10 +60,9 @@ RUN useradd -m -s /bin/zsh user && \
 RUN cp -r /root/.zsh /home/user/.zsh && \
     cp /root/.zshrc /home/user/.zshrc && \
     cp -r /root/.oh-my-zsh /home/user/.oh-my-zsh && \
-    cp -r /root/.cargo /home/user/.cargo && \
     cp /root/.gdbinit /home/user/.gdbinit
 
-RUN chown -R user:user /home/user/.zsh /home/user/.zshrc /home/user/.oh-my-zsh /home/user/.cargo /home/user/.gdbinit
+RUN chown -R user:user /home/user/.zsh /home/user/.zshrc /home/user/.oh-my-zsh /home/user/.gdbinit
 
 RUN chsh -s /bin/zsh root
 
