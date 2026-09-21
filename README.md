@@ -29,3 +29,4 @@
 docker build --tag {imagename}:{tagnum} .
 docker run -it --rm --cap-add SYS_PTRACE --security-opt seccomp:unconfined --name 22.04 -v ${PWD}/study:/study {imagename}:{tagnum} /usr/bin/zsh
 ```
+
